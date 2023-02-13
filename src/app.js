@@ -24,7 +24,13 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
 const cube = new THREE.Mesh(geometry, material)
 // 修改物体的位置
 // cube.position.set(5, 0, 0)
-cube.position.x = 3
+// cube.position.x = 3
+
+// 缩放
+// cube.scale.set(3, 2, 1)
+// cube.scale.x = 5
+// 旋转
+cube.rotation.set(Math.PI / 4, 0 , 0)
 
 // 往场景添加物体
 scene.add(cube)
