@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import gsap from 'gsap'
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -52,9 +53,11 @@ const controls = new OrbitControls(camera, renderer.domElement)
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
+// 设置动画
+gsap.to(cube.position, {x: 5, duration: 5})
+gsap.to(cube.rotation, {x: 2 * Math.PI, duration: 5, ease: "power1"})
+
 function animate(time) {
-  const t = (time / 1000) % 5
-  cube.position.x = t * 1
   requestAnimationFrame(animate)
   // controls.update()
   // 使用渲染器 通过相机 将场景渲染出来
