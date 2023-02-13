@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import gsap from 'gsap'
+import * as dat from 'dat.gui';
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -35,6 +36,35 @@ const cube = new THREE.Mesh(geometry, material)
 // 往场景添加物体
 scene.add(cube)
 
+// 应用图形用户界面更该变量
+const gui = new dat.GUI()
+gui.add(cube.position, 'x')
+  .min(0)
+  .max(5)
+  .step(0.01)
+  .name('移动x位置')
+  .onChange((x) => {
+    console.log('正在移动', x)
+  })
+  .onFinishChange(() => console.log('移动完成'))
+// 修改物体颜色值
+const param = { 
+  color: '#ffff00',
+  fn: () => {
+    gsap.to(cube.position, {x: 5, duration: 2, yoyo: true, repeat: -1 })
+  }
+}
+gui.addColor(param, 'color').onChange(val => {
+  cube.material.color.set(val)
+})
+// 显示隐藏
+gui.add(cube, 'visible').name('是否显示')
+// 绑定事件
+gui.add(param, 'fn').name('点击事件')
+// 创建文件夹
+const folder = gui.addFolder('设置立方体')
+folder.add(cube.material, 'wireframe')
+
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
 // 设置渲染器大小
@@ -54,23 +84,6 @@ controls.enableDamping = true
 // The X axis is red. The Y axis is green. The Z axis is blue.
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
-
-// 设置动画
-const animate1 = gsap.to(cube.position, {
-  x: 5, 
-  duration: 5,
-  repeat: -1,
-  delay: 1,
-  // 往返运动
-  yoyo: true,
-  onStart: () => {
-    console.log('动画开始')  
-  },
-  onComplete: () => {
-    console.log('动画结束')
-  } 
-})
-gsap.to(cube.rotation, {x: 2 * Math.PI, duration: 5, ease: "power1"})
 
 window.addEventListener('dblclick', ()=> {
   if (!document.fullscreenElement) {
