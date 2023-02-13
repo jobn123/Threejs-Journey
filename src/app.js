@@ -54,8 +54,29 @@ const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 // 设置动画
-gsap.to(cube.position, {x: 5, duration: 5})
+const animate1 = gsap.to(cube.position, {
+  x: 5, 
+  duration: 5,
+  repeat: -1,
+  delay: 1,
+  // 往返运动
+  yoyo: true,
+  onStart: () => {
+    console.log('动画开始')  
+  },
+  onComplete: () => {
+    console.log('动画结束')
+  } 
+})
 gsap.to(cube.rotation, {x: 2 * Math.PI, duration: 5, ease: "power1"})
+
+window.addEventListener('dblclick', ()=> {
+  if (animate1.isActive()) {
+    animate1.pause()
+  } else {
+    animate1.resume()
+  }
+})
 
 function animate(time) {
   requestAnimationFrame(animate)
