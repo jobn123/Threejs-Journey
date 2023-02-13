@@ -46,6 +46,8 @@ document.body.appendChild(renderer.domElement)
  
 // 轨道控制器 可以使得相机围绕物体360度运动
 const controls = new OrbitControls(camera, renderer.domElement)
+// 设置控制器阻尼，让动画更有真实性
+controls.enableDamping = true
 // controls.update()
 
 // 添加坐标轴辅助器
@@ -80,7 +82,7 @@ window.addEventListener('dblclick', ()=> {
 
 function animate(time) {
   requestAnimationFrame(animate)
-  // controls.update()
+  controls.update()
   // 使用渲染器 通过相机 将场景渲染出来
   renderer.render(scene, camera)
 }
