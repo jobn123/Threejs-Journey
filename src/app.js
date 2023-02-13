@@ -73,10 +73,10 @@ const animate1 = gsap.to(cube.position, {
 gsap.to(cube.rotation, {x: 2 * Math.PI, duration: 5, ease: "power1"})
 
 window.addEventListener('dblclick', ()=> {
-  if (animate1.isActive()) {
-    animate1.pause()
+  if (!document.fullscreenElement) {
+    renderer.domElement.requestFullscreen()
   } else {
-    animate1.resume()
+    document.exitFullscreen()
   }
 })
 
