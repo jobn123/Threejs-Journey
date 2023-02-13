@@ -22,6 +22,10 @@ const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
 // 根据几何体材质创建物体
 const cube = new THREE.Mesh(geometry, material)
+// 修改物体的位置
+// cube.position.set(5, 0, 0)
+cube.position.x = 3
+
 // 往场景添加物体
 scene.add(cube)
 
@@ -44,6 +48,13 @@ const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 function animate() {
+
+  cube.position.x += 0.01
+
+  if (cube.position.x > 5) {
+    cube.position.x = 0
+  }
+
   requestAnimationFrame(animate)
   // controls.update()
   // 使用渲染器 通过相机 将场景渲染出来
