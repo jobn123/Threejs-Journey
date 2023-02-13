@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -31,6 +32,17 @@ renderer.setSize(WIDTH, HEIGHT)
 // 将webgl渲染的canvas内容添加到body
 document.body.appendChild(renderer.domElement)
 
-// 使用渲染器 通过相机 将场景渲染出来
-renderer.render(scene, camera)
+// renderer.render(scene, camera)
  
+// 轨道控制器 可以使得相机围绕物体360度运动
+const controls = new OrbitControls(camera, renderer.domElement)
+// controls.update()
+
+function animate() {
+  requestAnimationFrame(animate)
+  // controls.update()
+  // 使用渲染器 通过相机 将场景渲染出来
+  renderer.render(scene, camera)
+}
+
+animate()
