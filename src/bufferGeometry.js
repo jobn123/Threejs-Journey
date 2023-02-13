@@ -18,20 +18,15 @@ camera.position.set(0, 0, 10)
 // 将相机添加到场景
 scene.add(camera)
 
-for(let i = 0; i < 50; i++) {
-  const geometry = new THREE.BufferGeometry()
-  const positionArray = new Float32Array(9)
-  // 每个三角形需要三个顶点，每个顶点需要三个坐标
-  for(let j = 0; j < 9; j++) {
-    positionArray[j] = Math.random() * 10 - 5
-  }
-  geometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
-  const color = new THREE.Color(Math.random(), Math.random(), Math.random())
-  const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: .5 })
-  const mesh = new THREE.Mesh(geometry, material)
-  scene.add(mesh)
-}
+// 导入纹理
+const textureLoader = new THREE.TextureLoader()
+const doorColorTexture = textureLoader.load('./color.jpg')
+
 // 创建几何体
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: '#ffff00', map: doorColorTexture })
+const cube = new THREE.Mesh(geometry, material)
+scene.add(cube)
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
