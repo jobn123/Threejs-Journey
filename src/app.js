@@ -38,6 +38,11 @@ document.body.appendChild(renderer.domElement)
 const controls = new OrbitControls(camera, renderer.domElement)
 // controls.update()
 
+// 添加坐标轴辅助器
+// The X axis is red. The Y axis is green. The Z axis is blue.
+const axesHelper = new THREE.AxesHelper(5)
+scene.add(axesHelper)
+
 function animate() {
   requestAnimationFrame(animate)
   // controls.update()
