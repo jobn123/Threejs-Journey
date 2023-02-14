@@ -32,6 +32,9 @@ const aoTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg')
 // 置换贴图要设置顶点数量还要配合displacementScale使用
 const doorHeightTexture = textureLoader.load('./textures/door/height.jpg')
 
+// 粗糙度贴图
+const doorRoughnessTexture = textureLoader.load('./textures/door/roughness.jpg')
+
 // 创建几何体
 // 透明纹理要设置 alphaMap 和 transparnet 
 const geometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100)
@@ -47,8 +50,12 @@ const material = new THREE.MeshStandardMaterial({
   aoMap: aoTexture,
   // 环境遮挡贴图强度
   aoMapIntensity: 1,
+  // 置换贴图
   displacementMap: doorHeightTexture,
-  displacementScale: 0.05
+  displacementScale: 0.05,
+  // 粗糙度
+  roughness: 1,
+  roughnessMap: doorRoughnessTexture
 })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
