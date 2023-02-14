@@ -18,8 +18,23 @@ camera.position.set(0, 0, 10)
 // 将相机添加到场景
 scene.add(camera)
 
+const event = {}
+event.onLoad = () => {
+  console.log('加载完成')
+}
+event.onProgress = (url, cur, total) => {
+  console.log('当前地址:', url)
+  console.log('当前位置:', cur)
+  console.log('总数:', total)
+}
+event.onError = () => {
+  console.log('加载失败')
+}
+// 纹理加载进度情况
+const manager = new THREE.LoadingManager(event.onLoad, event.onProgress, event.onError)
+
 // 导入纹理
-const textureLoader = new THREE.TextureLoader()
+const textureLoader = new THREE.TextureLoader(manager)
 const texture = textureLoader.load('./textures/door/color.jpg')
 
 // 透明贴图
