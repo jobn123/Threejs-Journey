@@ -7,5 +7,5 @@ Threejs-Journey
 ## 获取各种类型的纹理贴图
 
 - [poliigon](https://www.poliigon.com/)
-- [arroway-textures](https://arroway-textures..ch)
+- [arroway-textures](https://arroway-textures.ch)
 - Quixel Bridge
