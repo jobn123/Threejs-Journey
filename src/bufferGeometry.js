@@ -31,7 +31,7 @@ const aoTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg')
 // 创建几何体
 // 透明纹理要设置 alphaMap 和 transparnet 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ 
+const material = new THREE.MeshStandardMaterial({ 
   color: '#ffff00',
   // map: doorColorTexture 
   map: texture,
@@ -49,6 +49,17 @@ scene.add(cube)
 
 // 环境遮挡贴图需要设置第二组uv 
 geometry.setAttribute('uv2', new THREE.BufferAttribute(geometry.attributes.uv.array, 2)) 
+
+// 创建标准网络材质需要配合光照物理效果
+// 环境光
+// const light = new THREE.AmbientLight(0xffffff, 0.5);
+
+// 直线光
+const directionLight = new THREE.DirectionalLight(0xffffff, 1)
+// 设置平行光位置
+directionLight.position.set(10, 10, 10)
+
+scene.add(directionLight)
 
 const planeGeometry = new THREE.PlaneBufferGeometry(1, 1)
 const plane = new THREE.Mesh(planeGeometry, material)
