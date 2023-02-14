@@ -38,6 +38,9 @@ const doorRoughnessTexture = textureLoader.load('./textures/door/roughness.jpg')
 // 金属贴图
 const doorMetalnessTexture = textureLoader.load('./textures/door/metalness.jpg')
 
+// 法线贴图
+const normalTexture = textureLoader.load('./textures/door/normal.jpg')
+
 // 创建几何体
 // 透明纹理要设置 alphaMap 和 transparnet 
 const geometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100)
@@ -62,6 +65,8 @@ const material = new THREE.MeshStandardMaterial({
   // 金属度
   metalness: 1,
   metalnessMap: doorMetalnessTexture,
+  // 法线贴图
+  normalMap: normalTexture,
 })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
