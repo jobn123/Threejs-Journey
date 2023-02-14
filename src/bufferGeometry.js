@@ -28,9 +28,13 @@ const alphaTexure = textureLoader.load('./textures/door/alpha.jpg')
 // 环境遮挡贴图
 const aoTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg')
 
+// 置换贴图
+// 置换贴图要设置顶点数量还要配合displacementScale使用
+const doorHeightTexture = textureLoader.load('./textures/door/height.jpg')
+
 // 创建几何体
 // 透明纹理要设置 alphaMap 和 transparnet 
-const geometry = new THREE.BoxGeometry(1, 1, 1)
+const geometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100)
 const material = new THREE.MeshStandardMaterial({ 
   color: '#ffff00',
   // map: doorColorTexture 
@@ -43,6 +47,8 @@ const material = new THREE.MeshStandardMaterial({
   aoMap: aoTexture,
   // 环境遮挡贴图强度
   aoMapIntensity: 1,
+  displacementMap: doorHeightTexture,
+  displacementScale: 0.05
 })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
@@ -52,7 +58,8 @@ geometry.setAttribute('uv2', new THREE.BufferAttribute(geometry.attributes.uv.ar
 
 // 创建标准网络材质需要配合光照物理效果
 // 环境光
-// const light = new THREE.AmbientLight(0xffffff, 0.5);
+const light = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(light)
 
 // 直线光
 const directionLight = new THREE.DirectionalLight(0xffffff, 1)
@@ -61,9 +68,9 @@ directionLight.position.set(10, 10, 10)
 
 scene.add(directionLight)
 
-const planeGeometry = new THREE.PlaneBufferGeometry(1, 1)
+const planeGeometry = new THREE.PlaneBufferGeometry(1, 1, 200, 200)
 const plane = new THREE.Mesh(planeGeometry, material)
-plane.position.x = 3;
+plane.position.x = 2;
 scene.add(plane)
 
 planeGeometry.setAttribute('uv2', new THREE.BufferAttribute(planeGeometry.attributes.uv.array, 2))
