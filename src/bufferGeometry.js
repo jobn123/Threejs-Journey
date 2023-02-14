@@ -22,7 +22,11 @@ scene.add(camera)
 const textureLoader = new THREE.TextureLoader()
 const texture = textureLoader.load('./textures/door/color.jpg')
 
+// 透明贴图
 const alphaTexure = textureLoader.load('./textures/door/alpha.jpg')
+
+// 环境遮挡贴图
+const aoTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg')
 
 // 创建几何体
 // 透明纹理要设置 alphaMap 和 transparnet 
@@ -33,14 +37,25 @@ const material = new THREE.MeshBasicMaterial({
   map: texture,
   alphaMap: alphaTexure,
   transparent: true,
-  side: THREE.DoubleSide
+  // 默认只渲染一面
+  side: THREE.DoubleSide,
+  // 环境遮挡贴图
+  aoMap: aoTexture,
+  // 环境遮挡贴图强度
+  aoMapIntensity: 1,
 })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
 
-const plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), material)
+// 环境遮挡贴图需要设置第二组uv 
+geometry.setAttribute('uv2', new THREE.BufferAttribute(geometry.attributes.uv.array, 2)) 
+
+const planeGeometry = new THREE.PlaneBufferGeometry(1, 1)
+const plane = new THREE.Mesh(planeGeometry, material)
 plane.position.x = 3;
 scene.add(plane)
+
+planeGeometry.setAttribute('uv2', new THREE.BufferAttribute(planeGeometry.attributes.uv.array, 2))
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
