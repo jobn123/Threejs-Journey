@@ -20,36 +20,27 @@ scene.add(camera)
 
 // 导入纹理
 const textureLoader = new THREE.TextureLoader()
-const texture = textureLoader.load('./textures/minecraft.png')
+const texture = textureLoader.load('./textures/door/color.jpg')
 
-// 设置纹理算法
-// https://threejs.org/docs/index.html?q=texture#api/en/textures/Texture.magFilter
-texture.minFilter = THREE.NearestFilter
-texture.magFilter = THREE.NearestFilter
-
-// 设置纹理偏移
-// doorColorTexture.offset.x = 0.5
-// doorColorTexture.offset.set(0.5, 0.5)
-// 设置纹理旋转的原点
-// doorColorTexture.center.set(0.5, 0.5)
-// 设置纹理旋转
-// doorColorTexture.rotation = Math.PI / 4
-// 设置纹理重复
-// 水平重复两次 垂直重复三次
-// doorColorTexture.repeat.set(2, 3)
-// 设置纹理重复模式
-// doorColorTexture.wrapS = THREE.MirroredRepeatWrapping
-// doorColorTexture.wrapT = THREE.RepeatWrapping
+const alphaTexure = textureLoader.load('./textures/door/alpha.jpg')
 
 // 创建几何体
+// 透明纹理要设置 alphaMap 和 transparnet 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ 
   color: '#ffff00',
   // map: doorColorTexture 
-  map: texture
+  map: texture,
+  alphaMap: alphaTexure,
+  transparent: true,
+  side: THREE.DoubleSide
 })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
+
+const plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), material)
+plane.position.x = 3;
+scene.add(plane)
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
