@@ -4,14 +4,12 @@ import gsap from 'gsap'
 import * as dat from 'dat.gui';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 
-// 加载hdr环境贴图
-const rgbeLoader = new RGBELoader()
-rgbeLoader.loadAsync('textures/hdr/002.hdr').then((texture) => {
-  // hdr环境贴图需要设置经纬线映射的方式
-  texture.mapping = THREE.EquirectangularReflectionMapping;
-  scene.background = texture
-  scene.environment = texture
-})
+// 设置灯光与阴影
+// 1 材质要满足能够对光照有反应
+// 2 设置渲染器开启阴影计算 renderer.shadow.enabled = true
+// 3 设置光照投射阴影 directionalLight.castShadow = true
+// 4 设置物体投射阴影 sphere.castshadow = true
+// 5 设置物体接收阴影 plane.receiveShadow = true
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -28,30 +26,23 @@ camera.position.set(0, 0, 10)
 // 将相机添加到场景
 scene.add(camera)
 
-const cubeTextureLoader = new THREE.CubeTextureLoader()
-const envMapTexture = cubeTextureLoader.load([
-  './textures/environmentMaps/1/px.jpg',
-  './textures/environmentMaps/1/nx.jpg',
-  './textures/environmentMaps/1/py.jpg',
-  './textures/environmentMaps/1/ny.jpg',
-  './textures/environmentMaps/1/pz.jpg',
-  './textures/environmentMaps/1/nz.jpg',
-])
-
 const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20)
 const material = new THREE.MeshStandardMaterial({
-  metalness: 0.7,
-  roughness: 0.1,
+  // metalness: 0.7,
+  // roughness: 0.1,
   // envMap 会覆盖scene.environment
   // envMap: envMapTexture 
 })
 const mesh = new THREE.Mesh(sphereGeometry, material)
+mesh.castShadow = true
 scene.add(mesh)
 
-// 给场景添加背景
-scene.background = envMapTexture
-// 给场景所有的物体添加默认的环境贴图
-scene.environment =  envMapTexture
+const planeGeometry = new THREE.PlaneBufferGeometry( 10, 10 );
+const plane = new THREE.Mesh( planeGeometry, material );
+plane.position.set(0, -1, 0);
+plane.rotation.x = -Math.PI / 2
+plane.receiveShadow = true
+scene.add( plane );
 
 // 创建标准网络材质需要配合光照物理效果
 // 环境光
@@ -62,7 +53,7 @@ scene.add(light)
 const directionLight = new THREE.DirectionalLight(0xffffff, 1)
 // 设置平行光位置
 directionLight.position.set(10, 10, 10)
-
+directionLight.castShadow = true
 scene.add(directionLight)
 
 // 初始化渲染器
@@ -72,6 +63,8 @@ renderer.setSize(WIDTH, HEIGHT)
 // 将webgl渲染的canvas内容添加到body
 document.body.appendChild(renderer.domElement)
 
+// 渲染器开启阴影计算
+renderer.shadowMap.enabled = true
 // renderer.render(scene, camera)
  
 // 轨道控制器 可以使得相机围绕物体360度运动
