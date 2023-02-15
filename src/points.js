@@ -21,9 +21,26 @@ camera.position.set(0, 0, 10)
 // 将相机添加到场景
 scene.add(camera)
 
-const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20)
+const sphereGeometry = new THREE.SphereBufferGeometry(3, 20, 20)
+// 设置点材质
 const pointsMaterial = new THREE.PointsMaterial()
-pointsMaterial.size = 0.02
+pointsMaterial.size = 0.1
+pointsMaterial.color.set(0xfff000)
+// 相机深度而衰减
+pointsMaterial.sizeAttenuation = true
+
+// 载入纹理
+const textureLoader = new THREE.TextureLoader()
+const pointTexture = textureLoader.load('./textures/particles/1.png')
+
+// 设置纹理
+pointsMaterial.map = pointTexture
+pointsMaterial.alphaMap = pointTexture
+pointsMaterial.transparent = true
+// 渲染材质是否对深度缓冲区有任何影响
+pointsMaterial.depthWrite = false
+// 设置材质叠加模式
+pointsMaterial.blending = THREE.AdditiveBlending
 
 const points = new THREE.Points(sphereGeometry, pointsMaterial)
 scene.add(points)
@@ -53,15 +70,6 @@ directionLight.shadow.camera.left = -5
 directionLight.shadow.camera.right = 5
 scene.add(directionLight)
 
-// 观察光投影变化
-gui
-  .add(directionLight.shadow.camera, 'near')
-  .min(0)
-  .max(10)
-  .step(0.1)
-  .onChange(() => {
-    directionLight.shadow.camera.updateProjectionMatrix()
-  })
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
 // 设置渲染器大小
