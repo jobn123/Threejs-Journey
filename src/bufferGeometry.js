@@ -2,6 +2,16 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import gsap from 'gsap'
 import * as dat from 'dat.gui';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+
+// 加载hdr环境贴图
+const rgbeLoader = new RGBELoader()
+rgbeLoader.loadAsync('textures/hdr/002.hdr').then((texture) => {
+  // hdr环境贴图需要设置经纬线映射的方式
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  scene.background = texture
+  scene.environment = texture
+})
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -32,10 +42,16 @@ const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20)
 const material = new THREE.MeshStandardMaterial({
   metalness: 0.7,
   roughness: 0.1,
-  envMap: envMapTexture 
+  // envMap 会覆盖scene.environment
+  // envMap: envMapTexture 
 })
 const mesh = new THREE.Mesh(sphereGeometry, material)
 scene.add(mesh)
+
+// 给场景添加背景
+scene.background = envMapTexture
+// 给场景所有的物体添加默认的环境贴图
+scene.environment =  envMapTexture
 
 // 创建标准网络材质需要配合光照物理效果
 // 环境光
