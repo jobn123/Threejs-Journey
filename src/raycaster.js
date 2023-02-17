@@ -62,31 +62,6 @@ window.addEventListener('mousemove', (event) => {
   })
 })
 
-// 创建标准网络材质需要配合光照物理效果
-// 环境光
-const light = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(light)
-
-// 直线光
-const directionLight = new THREE.DirectionalLight(0xffffff, .5)
-// 设置平行光位置
-directionLight.position.set(5, 5, 5)
-// 光开启投影
-directionLight.castShadow = true
-// 设置投影模糊度
-directionLight.radius = 20
-// 设置阴影贴图分辨率
-directionLight.shadow.mapSize.set(2048, 2048)
-
-// 设置平行光投射相机的属性
-directionLight.shadow.camera.near = 0.5
-directionLight.shadow.camera.far = 500
-directionLight.shadow.camera.top = 5
-directionLight.shadow.camera.bottom = -5
-directionLight.shadow.camera.left = -5
-directionLight.shadow.camera.right = 5
-scene.add(directionLight)
-
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer()
 // 设置渲染器大小
