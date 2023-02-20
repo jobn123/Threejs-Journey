@@ -158,15 +158,8 @@ const mouse  =  new THREE.Vector2()
 
 // 监听鼠标位置
 window.addEventListener('mousemove', (event) => {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-  mouse.y = -((event.clientY / window.innerHeight) * 2 - 1)
-
-  raycaster.setFromCamera(mouse, camera)
-  let result = raycaster.intersectObjects(cubeArr)
-
-  result.forEach((item) => {
-    item.object.material = redMaterial
-  })
+  mouse.x = (event.clientX / window.innerWidth) - .5
+  mouse.y = (event.clientY / window.innerHeight) -.5
 })
 
 // 初始化渲染器
@@ -213,6 +206,7 @@ gsap.to(pointGroup.rotation, {
 
 function animate() {
   // const time = clock.getElapsedTime()
+  const deltaTime = clock.getDelta()
   // cubeGroup.rotation.x = time * .3
   // cubeGroup.rotation.y = time * .3
 
@@ -224,6 +218,8 @@ function animate() {
 
   // 根据当前滚动的scrollY 设置相机移动位置
   camera.position.y = -(window.scrollY / window.innerHeight) * 30
+  // 物体水平晃动
+  camera.position.x += (mouse.x * 10 - camera.position.x) * deltaTime * 5
 
   requestAnimationFrame(animate)
   // 使用渲染器 通过相机 将场景渲染出来

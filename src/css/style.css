@@ -30,3 +30,6 @@ canvas {
   opacity: 0;
   font-size: 30px;
 }
+::-webkit-scrollbar {
+  display: none;
+}
