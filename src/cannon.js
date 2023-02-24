@@ -36,6 +36,10 @@ const world = new CANNON.World()
 world.gravity.set(0, -9.8, 0)
 // 创建物理世界小球
 const sphereShape = new CANNON.Sphere(1)
+
+// 设置物体材质
+const sphereWorldMaterial = new CANNON.Material('sphere')
+
 // 创建物理世界物体
 const sphereBody = new CANNON.Body({
   shape: sphereShape,
@@ -43,7 +47,7 @@ const sphereBody = new CANNON.Body({
   // 小球质量
   mass: 1,
   // 物体材质
-  material: new CANNON.Material()
+  material: sphereWorldMaterial
 })
 // 将物体添加到物理世界
 world.addBody(sphereBody)
@@ -60,6 +64,8 @@ sphereBody.addEventListener('collide', HitEvent)
 // 创建物理世界地面
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body()
+const floorWorldMaterial = new CANNON.Material('floor')
+floorBody.material = floorWorldMaterial
 // 质量为0时,可以使得物体保持不动
 floorBody.mass = 0
 floorBody.addShape(floorShape)
@@ -68,6 +74,20 @@ floorBody.position.set(0, -5, 0)
 // 旋转地面位置
 floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
 world.addBody(floorBody)
+
+// 设置两种材质碰撞的参数
+const defaultContactMaterial = new CANNON.ContactMaterial(
+  sphereMaterial,
+  floorWorldMaterial,
+  {
+    // 摩擦力
+    friction: 0.1,
+    // 弹性
+    restitution: 0.7
+  }
+)
+// 将关联材质添加到物理世界
+world.addContactMaterial(defaultContactMaterial)
 
 // 添加环境光 平行光
 const ambientLight = new THREE.AmbientLight(0xffffff, .5)
