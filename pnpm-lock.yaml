@@ -1,12 +1,14 @@
 lockfileVersion: 5.4
 
 specifiers:
+  cannon-es: ^0.20.0
   dat.gui: ^0.7.9
   gsap: ^3.11.4
   parcel: ^2.8.3
   three: ^0.149.0
 
 dependencies:
+  cannon-es: 0.20.0
   dat.gui: 0.7.9
   gsap: 3.11.4
   three: 0.149.0
@@ -939,6 +941,10 @@ packages:
   /caniuse-lite/1.0.30001451:
     resolution: {integrity: sha512-XY7UbUpGRatZzoRft//5xOa69/1iGJRBlrieH6QYrkKLIFn3m7OVEJ81dSrKoy2BnKsdbX5cLrOispZNYo9v2w==}
     dev: true
+
+  /cannon-es/0.20.0:
+    resolution: {integrity: sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA==}
+    dev: false
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
