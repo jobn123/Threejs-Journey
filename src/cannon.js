@@ -48,6 +48,18 @@ const sphereBody = new CANNON.Body({
 // 将物体添加到物理世界
 world.addBody(sphereBody)
 
+// 创建物理世界地面
+const floorShape = new CANNON.Plane()
+const floorBody = new CANNON.Body()
+// 质量为0时,可以使得物体保持不动
+floorBody.mass = 0
+floorBody.addShape(floorShape)
+// 设置地面位置
+floorBody.position.set(0, -5, 0)
+// 旋转地面位置
+floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
+world.addBody(floorBody)
+
 // 添加环境光 平行光
 const ambientLight = new THREE.AmbientLight(0xffffff, .5)
 scene.add(ambientLight)
@@ -79,6 +91,7 @@ renderer.shadowMap.enabled = true
 // renderer.render(scene, camera)
 
 const clock = new THREE.Clock()
+
 
 function animate() {
   // const time = clock.getElapsedTime()
