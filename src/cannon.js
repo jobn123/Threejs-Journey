@@ -48,6 +48,15 @@ const sphereBody = new CANNON.Body({
 // 将物体添加到物理世界
 world.addBody(sphereBody)
 
+// 监听碰撞事件
+function HitEvent(e) {
+  // 获取碰撞强度
+  // 可以添加击打音效
+  const impactStrength = e.contact.getImpactVelocityAlongNormal()
+  console.log(impactStrength)
+}
+sphereBody.addEventListener('collide', HitEvent)
+
 // 创建物理世界地面
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body()
