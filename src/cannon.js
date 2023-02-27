@@ -45,6 +45,12 @@ function createCube() {
     // 物体材质
     material: cubeWorldMaterial
   })
+
+  // 施加力的大小 方向 位置
+  cubeBody.applyLocalForce(
+    new CANNON.Vec3(180, 0, 0), // 施加力的大小和位置
+    new CANNON.Vec3(0, 0, 0) // 施加力所在的方向
+  )
   // 将物体添加到物理世界
   world.addBody(cubeBody)
 
