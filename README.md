@@ -4,6 +4,7 @@ Threejs-Journey
 ## 参考资料
 - [什么是pbr](https://zhuanlan.zhihu.com/p/342484575)
 - [什么是hdr](https://zhuanlan.zhihu.com/p/415148604)
+- [渲染管线](https://zhuanlan.zhihu.com/p/137780634)
 
 ## 获取各种类型的纹理贴图
 
